@@ -1,11 +1,11 @@
-FROM php:8.3-apache
+FROM php:8.3-cli
 
-RUN apt-get update && \
-    apt-get install -y libapache2-mod-php default-libmysqlclient-dev && \
-    docker-php-ext-install mysqli pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql
 
-COPY . /var/www/html/
+WORKDIR /app
 
-RUN a2enmod rewrite
+COPY . .
 
-WORKDIR /var/www/html
+EXPOSE 8080
+
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "."]
