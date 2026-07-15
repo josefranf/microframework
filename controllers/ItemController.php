@@ -66,6 +66,7 @@ class ItemController
             if (!isset($_REQUEST['item']) || empty($_REQUEST['item']))
                 $errores['item'] = "* Item: Error";
             if (empty($errores)) {
+                $item->setCodigo($_REQUEST['codigo']);
                 $item->setItem($_REQUEST['item']);
                 $item->save();
 
