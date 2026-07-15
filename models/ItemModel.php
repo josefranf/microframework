@@ -66,18 +66,23 @@ class ItemModel
     // Método que almacena en BD un objeto ItemModel
     // Si tiene ya código actualiza el registro y si no tiene lo inserta
     public function save()
-    {
-        if (!isset($this->codigo)) {
-            $consulta = $this->db->prepare('INSERT INTO items ( item ) values ( ? )');
-            $consulta->bindParam(1, $this->item);
-            $consulta->execute();
-        } else {
-            $consulta = $this->db->prepare('UPDATE items SET item = ? WHERE codigo =  ? ');
-            $consulta->bindParam(1, $this->item);
-            $consulta->bindParam(2, $this->codigo);
-            $consulta->execute();
-        }
+   {
+    if (!isset($this->codigo)) {
+        $consulta = $this->db->prepare(
+            'INSERT INTO items (codigo, item) VALUES (?, ?)'
+        );
+        $consulta->bindParam(1, $this->codigo);
+        $consulta->bindParam(2, $this->item);
+        $consulta->execute();
+    } else {
+        $consulta = $this->db->prepare(
+            'UPDATE items SET item = ? WHERE codigo = ?'
+        );
+        $consulta->bindParam(1, $this->item);
+        $consulta->bindParam(2, $this->codigo);
+        $consulta->execute();
     }
+}
 
     // Método que elimina el ItemModel de la BD
     public function delete()
